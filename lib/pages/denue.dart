@@ -1,5 +1,5 @@
+import 'package:api_denue/services/apiDenue.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class DenueInegi extends StatefulWidget {
   const DenueInegi({super.key});
@@ -9,49 +9,41 @@ class DenueInegi extends StatefulWidget {
 }
 
 class _DenueInegiState extends State<DenueInegi> {
-  //https://www.inegi.org.mx/app/api/indicadores/desarrolladores/jsonxml/INDICATOR/1002000001/es/0700/true/BISE/2.0/a5ef31ea-ffe9-3af8-56b1-601f0b48ae7d?type=json
-  //a5ef31ea-ffe9-3af8-56b1-601f0b48ae7d
-  Future _economia() async {
-    final response = await http.get(Uri.parse(
-        "https://www.inegi.org.mx/app/api/indicadores/desarrolladores/jsonxml/INDICATOR/1002000001/es/0700/true/BISE/2.0/a5ef31ea-ffe9-3af8-56b1-601f0b48ae7d?type=json"));
-
-    if (response.statusCode == 200) {
-      print(response.body);
-    } else {
-      throw Exception("Fallo la conexión");
-    }
-
-    return response.body;
-  }
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    // _economia();
   }
 
   @override
   Widget build(BuildContext context) {
-    dynamic ver;
+    final Size size = MediaQuery.of(context).size;
+
     return Scaffold(
-      body: Center(
-        child: Container(
-          width: 100,
-          height: 100,
-          color: Colors.amber,
-          child: Column(
-            children: [
-              ListTile(
-                onTap: (() {
-                  ver = _economia();
-                  Center(
-                    child: Text(ver.toString()),
-                  );
-                }),
-              )
-            ],
-          ),
+      appBar: AppBar(
+        title: const Text('Denue'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print('DATA');
+          economia();
+        },
+        child: const Icon(Icons.info_outline),
+      ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: null,
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              height: 80,
+              color: Colors.grey,
+              child: Row(
+                children: const [Text('LAT'), Text('LONG')],
+              ),
+            )
+          ],
         ),
       ),
     );
