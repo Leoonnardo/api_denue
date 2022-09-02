@@ -13,10 +13,13 @@ class _DenueInegiState extends State<DenueInegi> {
   void initState() {
     super.initState();
   }
+  var lista = ["Economia1", "Economia2", "Economia3"];
+  String seccion = "Selecion de economia";
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    
 
     return Scaffold(
       appBar: AppBar(
@@ -38,9 +41,24 @@ class _DenueInegiState extends State<DenueInegi> {
             Container(
               width: double.infinity,
               height: 80,
-              color: Colors.grey,
+              // child: Row(
+              //   children: const [Text('LAT'), Text('LONG')],
+              // ),
               child: Row(
-                children: const [Text('LAT'), Text('LONG')],
+                children: [
+                  DropdownButton(
+                    items: lista.map((String resultado) {
+                      return DropdownMenuItem(
+                          value: resultado, child: Text(resultado));
+                    }).toList(),
+                    onChanged: ((value) {
+                      setState(() {
+                        seccion = value.toString();
+                      });
+                    }),
+                    hint: Text(seccion),
+                  )
+                ],
               ),
             )
           ],
