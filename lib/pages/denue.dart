@@ -29,8 +29,17 @@ class _DenueInegiState extends State<DenueInegi> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print('DATA');
-          economia();
+          Navigator.pushReplacementNamed(context, 'listDenue', arguments: {
+            'data': [
+              'comercio',
+              '16.2320885648689',
+              '-93.90821390642238',
+              '250'
+            ]
+          });
+          // print('DATA');
+          // getEconomia(
+          //     'comercio', '16.2320885648689', '-93.90821390642238', '250');
         },
         child: const Icon(Icons.info_outline),
       ),
@@ -41,7 +50,7 @@ class _DenueInegiState extends State<DenueInegi> {
         child: Column(
           children: [
             Container(
-              // color: Colors.red,
+              color: Colors.transparent,
               width: size.width,
               height: size.height * 0.1,
               child: Row(
@@ -85,7 +94,7 @@ class _DenueInegiState extends State<DenueInegi> {
                     ),
                   ),
                   Container(
-                      // color: Colors.pink,
+                      color: Colors.transparent,
                       width: size.width * 0.2,
                       // padding: const EdgeInsets.all(5),
                       child: ElevatedButton(
@@ -111,11 +120,6 @@ class _DenueInegiState extends State<DenueInegi> {
                 ],
               ),
             ),
-            Container(
-              width: double.infinity,
-              height: 200,
-              // color: Colors.orange,
-            )
           ],
         ),
       ),
