@@ -16,7 +16,9 @@ class _DenueInegiState extends State<DenueInegi> {
   }
 
   var lista = ["Economia1", "Economia2", "Economia3"];
-  String seccion = "Selecion de economia";
+  String seccion = "Selec. Economia";
+  final codPostal = TextEditingController();
+  int noPostal = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -34,31 +36,79 @@ class _DenueInegiState extends State<DenueInegi> {
         child: const Icon(Icons.info_outline),
       ),
       body: Container(
-        width: double.infinity,
-        height: double.infinity,
+        width: size.width,
+        height: size.height,
         color: null,
         child: Column(
           children: [
             Container(
-              width: double.infinity,
-              height: 80,
-              // child: Row(
-              //   children: const [Text('LAT'), Text('LONG')],
-              // ),
+              // color: Colors.red,
+              width: size.width,
+              height: size.height * 0.1,
               child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  DropdownButton(
-                    items: lista.map((String resultado) {
-                      return DropdownMenuItem(
-                          value: resultado, child: Text(resultado));
-                    }).toList(),
-                    onChanged: ((value) {
-                      setState(() {
-                        seccion = value.toString();
-                      });
-                    }),
-                    hint: Text(seccion),
-                  )
+                  Container(
+                    // color: Colors.blue,
+                    width: size.width * 0.3,
+                    padding: const EdgeInsets.all(5),
+                    child: TextField(
+                      controller: codPostal,
+                      autofocus: false,
+                      maxLength: 5,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        hintText: 'Cod. Postal',
+                        // enabledBorder: OutlineInputBorder(
+                        //     borderSide: BorderSide(color: Colors.black)),
+                        // focusedBorder: OutlineInputBorder(
+                        //     borderSide: BorderSide(color: Colors.black))
+                      ),
+                    ),
+                  ),
+                  Container(
+                    // color: Colors.pink,
+                    width: size.width * 0.4,
+                    padding: const EdgeInsets.all(5),
+                    child: DropdownButton(
+                      items: lista.map((String resultado) {
+                        return DropdownMenuItem(
+                            value: resultado, child: Text(resultado));
+                      }).toList(),
+                      onChanged: ((value) {
+                        setState(() {
+                          seccion = value.toString();
+                        });
+                      }),
+                      hint: Text(seccion),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  Container(
+                      // color: Colors.pink,
+                      width: size.width * 0.2,
+                      // padding: const EdgeInsets.all(5),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            noPostal = int.parse(codPostal.text);
+                            showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) => AlertDialog(
+                                      title: Text(
+                                          'Codigo postal: $noPostal y Seleccion de economia: $seccion'),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('OK'))
+                                      ],
+                                    ));
+                            print(noPostal);
+                          },
+                          child: const Text('Buscar')))
                 ],
               ),
             ),
