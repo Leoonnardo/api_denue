@@ -1,4 +1,5 @@
 import 'package:api_denue/services/apiDenue.dart';
+import 'package:api_denue/widgets/recetaSeleccionada.dart';
 import 'package:flutter/material.dart';
 
 class DenueInegi extends StatefulWidget {
@@ -13,13 +14,13 @@ class _DenueInegiState extends State<DenueInegi> {
   void initState() {
     super.initState();
   }
+
   var lista = ["Economia1", "Economia2", "Economia3"];
   String seccion = "Selecion de economia";
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    
 
     return Scaffold(
       appBar: AppBar(
@@ -59,6 +60,19 @@ class _DenueInegiState extends State<DenueInegi> {
                     hint: Text(seccion),
                   )
                 ],
+              ),
+            ),
+            SizedBox(
+              height: size.height * 0.5,
+              child: ListView.builder(
+                itemCount: 5,
+                itemBuilder: (_, index) => InkWell(
+                  child: const RecetaSeleccionada(
+                      prueba1: "colorCaducidad", prueba2: "Color asda"),
+                  onTap: () {
+                    print("Se esta tocando");
+                  },
+                ),
               ),
             )
           ],
