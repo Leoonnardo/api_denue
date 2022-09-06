@@ -1,4 +1,5 @@
 import 'package:api_denue/services/apiDenue.dart';
+import 'package:api_denue/widgets/recetaSeleccionada.dart';
 import 'package:flutter/material.dart';
 
 class DenueInegi extends StatefulWidget {
@@ -120,6 +121,19 @@ class _DenueInegiState extends State<DenueInegi> {
                 ],
               ),
             ),
+            SizedBox(
+              height: size.height * 0.5,
+              child: ListView.builder(
+                itemCount: 5,
+                itemBuilder: (_, index) => InkWell(
+                  child: const RecetaSeleccionada(
+                      prueba1: "colorCaducidad", prueba2: "Color asda"),
+                  onTap: () {
+                    print("Se esta tocando");
+                  },
+                ),
+              ),
+            )
           ],
         ),
       ),
