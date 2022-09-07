@@ -52,7 +52,7 @@ class _DenueInegiState extends State<DenueInegi> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             print('DATA');
-            economia();
+            // economia();
           },
           child: const Icon(Icons.info_outline),
         ),
