@@ -38,9 +38,6 @@ class _DenueInegiState extends State<DenueInegi> {
               '250'
             ]
           });
-          // print('DATA');
-          // getEconomia(
-          //     'comercio', '16.2320885648689', '-93.90821390642238', '250');
         },
         child: const Icon(Icons.info_outline),
       ),

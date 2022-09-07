@@ -1,5 +1,6 @@
 import 'package:api_denue/pages/denue.dart';
 import 'package:api_denue/pages/listViewDenue.dart';
+import 'package:api_denue/pages/tradeData.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'inicio': (_) => const DenueInegi(),
         'listDenue': (_) => const ListViewDenue(),
+        'tradeData': (_) => const TradeData(),
       },
     );
   }
