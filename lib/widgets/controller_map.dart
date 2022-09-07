@@ -13,9 +13,8 @@ class ControllerMap extends ChangeNotifier {
     controller.setMapStyle(mapStyle);
   }
 
-  void onTap(LatLng position) {
-    _markers.clear()
-    ;
+  LatLng onTap(LatLng position) {
+    _markers.clear();
     final markerId = MarkerId(_markers.length.toString());
     final marker = Marker(
       markerId: markerId,
@@ -24,5 +23,6 @@ class ControllerMap extends ChangeNotifier {
     print(position);
     _markers[markerId] = marker;
     notifyListeners();
+    return position;
   }
 }

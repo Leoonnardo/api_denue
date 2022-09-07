@@ -1,8 +1,4 @@
-import 'dart:async';
-
-import 'package:api_denue/services/apiDenue.dart';
 import 'package:api_denue/widgets/controller_map.dart';
-import 'package:api_denue/widgets/recetaSeleccionada.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,11 +16,8 @@ class _DenueInegiState extends State<DenueInegi> {
     super.initState();
   }
 
-  // Completer<GoogleMapController> _controller = Completer();
-  // final _controller = ControllerMap();
-
   var listaEconomia = ["Restaurantes", "Hoteles", "Camiones", "Pesca"];
-  var listaDistancia = ["300 m", "500 m", "1000 m"];
+  var listaDistancia = ["300", "500", "1000"];
   String seccionDistancia = "Distancia";
   String seccionEconomia = "Economia";
   final codPostal = TextEditingController();
@@ -35,11 +28,7 @@ class _DenueInegiState extends State<DenueInegi> {
     zoom: 14.4746,
   );
 
-  final CameraPosition _kLake = const CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+  late LatLng latitud;
 
   @override
   Widget build(BuildContext context) {
@@ -51,20 +40,6 @@ class _DenueInegiState extends State<DenueInegi> {
         appBar: AppBar(
           title: const Text('Denue'),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            print('DATA');
-            // economia();
-          },
-          child: const Icon(Icons.info_outline),
-        ),
-        // body: GoogleMap(
-        //   mapType: MapType.normal,
-        //   initialCameraPosition: _kGooglePlex,
-        //   onMapCreated: (GoogleMapController controller) {
-        //     _controller.complete(controller);
-        //   },
-        // ),
         body: Stack(
           children: [
             SizedBox(
@@ -73,7 +48,6 @@ class _DenueInegiState extends State<DenueInegi> {
               child: Column(
                 children: [
                   SizedBox(
-                    // color: Colors.red,
                     width: size.width,
                     height: size.height * 0.1,
                     child: Row(
@@ -99,7 +73,6 @@ class _DenueInegiState extends State<DenueInegi> {
                           ),
                         ),
                         Container(
-                          // color: Colors.pink,
                           width: size.width * 0.4,
                           padding: const EdgeInsets.all(5),
                           child: DropdownButton(
@@ -133,7 +106,7 @@ class _DenueInegiState extends State<DenueInegi> {
                   initialCameraPosition: _kGooglePlex,
                   onMapCreated: controller.onMapCreated,
                   markers: controller.markers,
-                  onTap: controller.onTap,
+                  onTap: (argument) => {latitud = controller.onTap(argument)},
                 ),
               ),
             ),
@@ -146,24 +119,22 @@ class _DenueInegiState extends State<DenueInegi> {
                   // padding: const EdgeInsets.all(5),
                   child: ElevatedButton(
                       onPressed: () {
+                        print("Economia: " + seccionEconomia);
+                        print("Distancia: " + seccionDistancia);
+                        print("Latitud: " + latitud.latitude.toString() + " " + latitud.longitude.toString());
+                        Navigator.pushReplacementNamed(context, 'listDenue',
+                            arguments: {
+                              'data': [
+                                seccionEconomia,
+                                latitud.latitude.toString(),
+                                latitud.longitude.toString(),
+                                seccionDistancia
+                              ]
+                            });
                       },
                       child: const Text('Buscar'))),
             )
           ],
-
-          // SizedBox(
-          //   height: size.height * 0.5,
-          //   child: ListView.builder(
-          //     itemCount: 5,
-          //     itemBuilder: (_, index) => InkWell(
-          //       child: const RecetaSeleccionada(
-          //           prueba1: "colorCaducidad", prueba2: "Color asda"),
-          //       onTap: () {
-          //         print("Se esta tocando");
-          //       },
-          //     ),
-          //   ),
-          // )
         ),
       ),
     );
