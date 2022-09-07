@@ -1,4 +1,6 @@
 import 'package:api_denue/pages/denue.dart';
+import 'package:api_denue/pages/listViewDenue.dart';
+import 'package:api_denue/pages/tradeData.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -8,7 +10,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,7 +17,9 @@ class MyApp extends StatelessWidget {
       title: 'Inegi Denue',
       initialRoute: 'inicio',
       routes: {
-        'inicio': (BuildContext context) => const DenueInegi(),
+        'inicio': (_) => const DenueInegi(),
+        'listDenue': (_) => const ListViewDenue(),
+        'tradeData': (_) => const TradeData(),
       },
     );
   }

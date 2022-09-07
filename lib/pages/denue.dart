@@ -24,7 +24,7 @@ class _DenueInegiState extends State<DenueInegi> {
   // final _controller = ControllerMap();
 
   var listaEconomia = ["Restaurantes", "Hoteles", "Camiones", "Pesca"];
-  var listaDistancia = ["300", "500", "1000"];
+  var listaDistancia = ["300 m", "500 m", "1000 m"];
   String seccionDistancia = "Distancia";
   String seccionEconomia = "Economia";
   final codPostal = TextEditingController();
@@ -54,7 +54,7 @@ class _DenueInegiState extends State<DenueInegi> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             print('DATA');
-            economia();
+            // economia();
           },
           child: const Icon(Icons.info_outline),
         ),
