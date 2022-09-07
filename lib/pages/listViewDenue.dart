@@ -1,4 +1,5 @@
 import 'package:api_denue/services/apiDenue.dart';
+import 'package:api_denue/styles/colors_views.dart';
 import 'package:flutter/material.dart';
 
 class ListViewDenue extends StatefulWidget {
@@ -22,11 +23,16 @@ class _ListViewDenueState extends State<ListViewDenue> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, 'inicio');
+          },
+        ),
         title: const Text('Comercios'),
       ),
       body: Container(
-          color: Colors.transparent,
+          color: ColorSelect.container,
           width: size.width,
           height: double.infinity,
           child: FutureBuilder(
@@ -48,10 +54,7 @@ class _ListViewDenueState extends State<ListViewDenue> {
                       child: ListView.builder(
                         itemCount: tradeData.length,
                         itemBuilder: (context, index) => cardDenue(
-                            size.width,
-                            tradeData[index]['CLEE'].toString(),
-                            tradeData[index]['Id'],
-                            tradeData[index]['Nombre']),
+                            size.width, tradeData[index], dataConsulta),
                       ),
                       onRefresh: () async {
                         setState(() {});
@@ -63,10 +66,11 @@ class _ListViewDenueState extends State<ListViewDenue> {
     );
   }
 
-  Widget cardDenue(double width, String clee, String id, String nombre) {
+  // String clee, String id, String nombre
+  Widget cardDenue(double width, Map dataComercio, List dataConsulta) {
     return Card(
-      color: Colors.grey,
-      elevation: 7,
+      color: ColorSelect.card,
+      elevation: 5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Column(
         children: [
@@ -74,31 +78,29 @@ class _ListViewDenueState extends State<ListViewDenue> {
             color: Colors.transparent,
             child: ListTile(
               title: Text(
-                nombre,
+                dataComercio['Nombre'],
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
-              subtitle: Text('$clee || $id'),
-              // trailing: TextButton(
-              //     child: const Text('Comprar',
-              //         style: TextStyle(fontSize: 15, color: Colors.green)),
-              //     style: ElevatedButton.styleFrom(
-              //       side: const BorderSide(width: 2, color: Colors.green),
-              //       shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(15),
-              //       ),
-              //     ),
-              //     onPressed: () {
-              //       Map<String, dynamic> restaurant = {
-              //         'id': idRestaurant.toString(),
-              //         'name': nameRestaurant
-              //       };
-              //       Navigator.pushNamed(context, 'restaurantMenu', arguments: {
-              //         'user': user,
-              //         'restaurant': restaurant,
-              //         'order': order,
-              //       });
-              //     }),
+              subtitle: Text(dataComercio['Telefono'],
+                  style: const TextStyle(fontSize: 15)),
+              trailing: TextButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorSelect.button,
+                    // side: const BorderSide(width: 2, color: ColorSelect.button),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  child: const Text('Ver',
+                      style: TextStyle(fontSize: 15, color: ColorSelect.text)),
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, 'tradeData',
+                        arguments: {
+                          'dataConsulta': dataConsulta,
+                          'dataComercio': dataComercio
+                        });
+                  }),
             ),
           ),
         ],
