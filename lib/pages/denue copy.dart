@@ -23,10 +23,8 @@ class _DenueInegiState extends State<DenueInegi> {
   // Completer<GoogleMapController> _controller = Completer();
   // final _controller = ControllerMap();
 
-  var listaEconomia = ["Restaurantes", "Hoteles", "Camiones", "Pesca"];
-  var listaDistancia = ["300", "500", "1000"];
-  String seccionDistancia = "Distancia";
-  String seccionEconomia = "Economia";
+  var lista = ["Economia1", "Economia2", "Economia3"];
+  String seccion = "Selec. Economia";
   final codPostal = TextEditingController();
   int noPostal = 0;
 
@@ -46,7 +44,7 @@ class _DenueInegiState extends State<DenueInegi> {
     final Size size = MediaQuery.of(context).size;
 
     return ChangeNotifierProvider<ControllerMap>(
-      create: (_) => ControllerMap(),
+      create: (_)=>ControllerMap(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Denue'),
@@ -81,21 +79,21 @@ class _DenueInegiState extends State<DenueInegi> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Container(
-                          // color: Colors.pink,
-                          width: size.width * 0.4,
+                          // color: Colors.blue,
+                          width: size.width * 0.3,
                           padding: const EdgeInsets.all(5),
-                          child: DropdownButton(
-                            items: listaEconomia.map((String resultado) {
-                              return DropdownMenuItem(
-                                  value: resultado, child: Text(resultado));
-                            }).toList(),
-                            onChanged: ((value) {
-                              setState(() {
-                                seccionEconomia = value.toString();
-                              });
-                            }),
-                            hint: Text(seccionEconomia),
-                            borderRadius: BorderRadius.circular(10),
+                          child: TextField(
+                            controller: codPostal,
+                            autofocus: false,
+                            maxLength: 5,
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              hintText: 'Cod. Postal',
+                              // enabledBorder: OutlineInputBorder(
+                              //     borderSide: BorderSide(color: Colors.black)),
+                              // focusedBorder: OutlineInputBorder(
+                              //     borderSide: BorderSide(color: Colors.black))
+                            ),
                           ),
                         ),
                         Container(
@@ -103,19 +101,43 @@ class _DenueInegiState extends State<DenueInegi> {
                           width: size.width * 0.4,
                           padding: const EdgeInsets.all(5),
                           child: DropdownButton(
-                            items: listaDistancia.map((String resultado) {
+                            items: lista.map((String resultado) {
                               return DropdownMenuItem(
                                   value: resultado, child: Text(resultado));
                             }).toList(),
                             onChanged: ((value) {
                               setState(() {
-                                seccionDistancia = value.toString();
+                                seccion = value.toString();
                               });
                             }),
-                            hint: Text(seccionDistancia),
+                            hint: Text(seccion),
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
+                        Container(
+                            // color: Colors.pink,
+                            width: size.width * 0.2,
+                            // padding: const EdgeInsets.all(5),
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  noPostal = int.parse(codPostal.text);
+                                  showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (context) => AlertDialog(
+                                            title: Text(
+                                                'Codigo postal: $noPostal y Seleccion de economia: $seccion'),
+                                            actions: [
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: const Text('OK'))
+                                            ],
+                                          ));
+                                  print(noPostal);
+                                },
+                                child: const Text('Buscar')))
                       ],
                     ),
                   ),
@@ -125,7 +147,7 @@ class _DenueInegiState extends State<DenueInegi> {
             Container(
               padding: EdgeInsets.only(top: size.height * 0.1),
               width: size.width,
-              height: size.height * 0.7,
+              height: size.height * 0.5,
               child: Consumer<ControllerMap>(
                 builder: (_, controller, __) => GoogleMap(
                   myLocationEnabled: true,
@@ -137,20 +159,8 @@ class _DenueInegiState extends State<DenueInegi> {
                 ),
               ),
             ),
-            Center(
-              child: Container(
-                  // color: Colors.pink,
-                  margin: EdgeInsets.only(top: size.height * 0.6),
-                  height: size.height * 0.05,
-                  width: size.width * 0.4,
-                  // padding: const EdgeInsets.all(5),
-                  child: ElevatedButton(
-                      onPressed: () {
-                      },
-                      child: const Text('Buscar'))),
-            )
           ],
-
+    
           // SizedBox(
           //   height: size.height * 0.5,
           //   child: ListView.builder(
