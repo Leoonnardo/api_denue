@@ -28,7 +28,11 @@ class _DenueInegiState extends State<DenueInegi> {
     zoom: 14.4746,
   );
 
-  late LatLng latitud;
+  late LatLng latitud = const LatLng(0, 0);
+  bool botonBuscar = false;
+  bool botonEconomia = false;
+  bool botonDistancia = false;
+  bool clickUbicacion = false;
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +70,12 @@ class _DenueInegiState extends State<DenueInegi> {
                             onChanged: ((value) {
                               setState(() {
                                 seccionEconomia = value.toString();
+                                botonEconomia = true;
+                                if (clickUbicacion == true &&
+                                    botonDistancia == true &&
+                                    botonEconomia == true) {
+                                  botonBuscar = true;
+                                }
                               });
                             }),
                             hint: Text(seccionEconomia),
@@ -83,6 +93,12 @@ class _DenueInegiState extends State<DenueInegi> {
                             onChanged: ((value) {
                               setState(() {
                                 seccionDistancia = value.toString();
+                                botonDistancia = true;
+                                if (clickUbicacion == true &&
+                                    botonDistancia == true &&
+                                    botonEconomia == true) {
+                                  botonBuscar = true;
+                                }
                               });
                             }),
                             hint: Text(seccionDistancia),
@@ -106,7 +122,16 @@ class _DenueInegiState extends State<DenueInegi> {
                   initialCameraPosition: _kGooglePlex,
                   onMapCreated: controller.onMapCreated,
                   markers: controller.markers,
-                  onTap: (argument) => {latitud = controller.onTap(argument)},
+                  onTap: (argument) {
+                    latitud = controller.onTap(argument);
+                    clickUbicacion = true;
+                    setState(() {});
+                    if (clickUbicacion == true &&
+                        botonDistancia == true &&
+                        botonEconomia == true) {
+                      botonBuscar = true;
+                    }
+                  },
                 ),
               ),
             ),
@@ -118,20 +143,36 @@ class _DenueInegiState extends State<DenueInegi> {
                   width: size.width * 0.4,
                   // padding: const EdgeInsets.all(5),
                   child: ElevatedButton(
-                      onPressed: () {
-                        print("Economia: " + seccionEconomia);
-                        print("Distancia: " + seccionDistancia);
-                        print("Latitud: " + latitud.latitude.toString() + " " + latitud.longitude.toString());
-                        Navigator.pushReplacementNamed(context, 'listDenue',
-                            arguments: {
-                              'data': [
-                                seccionEconomia,
-                                latitud.latitude.toString(),
-                                latitud.longitude.toString(),
-                                seccionDistancia
-                              ]
-                            });
-                      },
+                      onPressed: botonBuscar
+                          ? () {
+                              print("Economia: " + seccionEconomia);
+                              print("Distancia: " + seccionDistancia);
+                              print("Latitud: " +
+                                  latitud.latitude.toString() +
+                                  " " +
+                                  latitud.longitude.toString());
+                              print("Latitud: " + latitud.toString());
+                              if (seccionEconomia != "Economia" &&
+                                  seccionDistancia != "Distancia" &&
+                                  latitud.latitude.toString() != "0.0" &&
+                                  latitud.longitude.toString() != "0.0") {
+                                print("Es correcto");
+                                Navigator.pushReplacementNamed(
+                                    context, 'listDenue',
+                                    arguments: {
+                                      'data': [
+                                        seccionEconomia,
+                                        latitud.latitude.toString(),
+                                        latitud.longitude.toString(),
+                                        seccionDistancia
+                                      ]
+                                    });
+                              } else {
+                                print("No has elegido uno");
+                              }
+                              //
+                            }
+                          : null,
                       child: const Text('Buscar'))),
             )
           ],
