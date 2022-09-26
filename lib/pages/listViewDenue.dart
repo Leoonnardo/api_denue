@@ -86,7 +86,7 @@ class _ListViewDenueState extends State<ListViewDenue> {
                   style: const TextStyle(fontSize: 15)),
               trailing: TextButton(
                   style: ElevatedButton.styleFrom(
-                    // backgroundColor: ColorSelect.button,
+                    backgroundColor: ColorSelect.button,
                     // side: const BorderSide(width: 2, color: ColorSelect.button),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
