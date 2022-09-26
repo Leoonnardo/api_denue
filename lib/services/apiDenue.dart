@@ -13,7 +13,7 @@ Future<List<dynamic>> getEconomia(
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(utf8.decode(response.bodyBytes));
       print('DENTRO DEL JSON');
-      // print(jsonResponse[3]);
+      print(jsonResponse[3]);
       // print(jsonResponse);
       return jsonResponse;
       // return jsonResponse['restaurants'];
